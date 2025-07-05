@@ -34,22 +34,6 @@ const { lang } = Astro.props
 const pinnedPosts = await getPinnedPosts(lang)
 const postsByYear = await getPostsByYear(lang)
 
-import { contentfulClient } from "../lib/contentful";
-import type { BlogPost } from "../lib/contentful";
-
-const entries = await contentfulClient.getEntries<BlogPost>({
-  content_type: "blogPost",
-});
-
-const posts = entries.items.map((item) => {
-  const { title, date, description, slug } = item.fields;
-  return {
-    title,
-    slug,
-    description,
-    date: new Date(date).toLocaleDateString()
-  };
-});
 ---
 <Layout>
   <!-- Pinned Posts -->

@@ -22,6 +22,8 @@ import { remarkAdmonitions } from './src/plugins/remark-admonitions.mjs'
 import { remarkMediaEmbeds } from './src/plugins/remark-media-embeds.mjs'
 import { remarkReadingTime } from './src/plugins/remark-reading-time.mjs'
 
+import netlify from '@astrojs/netlify';
+
 const url = themeConfig.site.url
 const locale = themeConfig.global.locale
 const imageHostURL = themeConfig.preload?.imageHostURL
@@ -34,12 +36,15 @@ const imageConfig = imageHostURL
 export default defineConfig({
   site: url,
   base: '/',
+
   //trailingSlash: 'always',
   prefetch: {
     prefetchAll: true,
     defaultStrategy: 'viewport', // hover, tap, viewport, load
   },
+
   ...imageConfig,
+
   i18n: {
     locales: Object.entries(langMap).map(([path, codes]) => ({
       path,
@@ -47,6 +52,7 @@ export default defineConfig({
     })),
     defaultLocale: locale,
   },
+
   integrations: [
     UnoCSS({
       injectReset: true,
@@ -67,6 +73,7 @@ export default defineConfig({
       SVG: false,
     }),
   ],
+
   markdown: {
     remarkPlugins: [
       remarkDirective,
@@ -142,13 +149,17 @@ export default defineConfig({
       },
     },
   },
+
   devToolbar: {
     enabled: false,
   },
+
   // For local development
   server: {
     headers: {
       'Access-Control-Allow-Origin': 'https://giscus.app',
     },
   },
+
+  adapter: netlify(),
 })

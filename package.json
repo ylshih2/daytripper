@@ -24,7 +24,7 @@
     "@astrojs/sitemap": "^3.4.1",
     "@contentful/rich-text-html-renderer": "^17.0.1",
     "@waline/client": "^3.5.7",
-    "astro": "^5.10.2",
+    "astro": "^5.11.0",
     "astro-compress": "^2.3.8",
     "astro-og-canvas": "^0.7.0",
     "astro-robots-txt": "^1.0.0",

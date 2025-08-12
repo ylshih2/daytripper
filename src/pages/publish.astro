@@ -8,10 +8,12 @@ import Layout from '@/layouts/Layout.astro'
     <input id="tags" type="text" placeholder="Tags (comma separated)" class="w-full border p-2" />
     <div class="border p-2">
       <div id="toolbar" class="mb-2 space-x-2">
+
         <button data-command="bold" class="px-2 py-1 border">Bold</button>
         <button data-command="italic" class="px-2 py-1 border">Italic</button>
         <button data-command="formatBlock" data-value="h2" class="px-2 py-1 border">H2</button>
         <button data-command="insertUnorderedList" class="px-2 py-1 border">Bullet</button>
+
       </div>
       <div id="editor" contenteditable="true" class="min-h-80 outline-none"></div>
     </div>
@@ -20,8 +22,10 @@ import Layout from '@/layouts/Layout.astro'
 
   <script>
     const toolbar = document.getElementById('toolbar')
+
     const titleInput = document.getElementById('title')
     const tagsInput = document.getElementById('tags')
+
     const editor = document.getElementById('editor')
     const publishBtn = document.getElementById('publish')
 
@@ -32,7 +36,9 @@ import Layout from '@/layouts/Layout.astro'
       const cmd = target.dataset.command
       if (!cmd)
         return
+
       const value = target.dataset.value || null
+
       document.execCommand(cmd, false, value)
     })
 

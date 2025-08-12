@@ -1,0 +1,60 @@
+---
+import Layout from '@/layouts/Layout.astro'
+---
+
+<Layout postTitle="Publish">
+  <div class="space-y-4">
+    <input id="title" type="text" placeholder="Title" class="w-full border p-2" />
+    <input id="tags" type="text" placeholder="Tags (comma separated)" class="w-full border p-2" />
+    <div class="border p-2">
+      <div id="toolbar" class="mb-2 space-x-2">
+        <button data-command="bold" class="border px-2 py-1">Bold</button>
+        <button data-command="italic" class="border px-2 py-1">Italic</button>
+        <button data-command="formatBlock" data-value="h2" class="border px-2 py-1">H2</button>
+        <button data-command="insertUnorderedList" class="border px-2 py-1">Bullet</button>
+      </div>
+      <div id="editor" contenteditable="true" class="min-h-80 outline-none"></div>
+    </div>
+    <button id="publish" class="border px-4 py-2">Publish</button>
+  </div>
+
+  <script>
+    const toolbar = document.getElementById('toolbar')
+    const titleInput = document.getElementById('title') as HTMLInputElement | null
+    const tagsInput = document.getElementById('tags') as HTMLInputElement | null
+    const editor = document.getElementById('editor')
+    const publishBtn = document.getElementById('publish')
+
+    toolbar?.addEventListener('click', (e) => {
+      const target = e.target
+      if (!(target instanceof HTMLElement))
+        return
+      const cmd = target.dataset.command
+      if (!cmd)
+        return
+      const value = target.dataset.value
+      document.execCommand(cmd, false, value)
+    })
+
+    publishBtn?.addEventListener('click', async () => {
+      const title = titleInput?.value || ''
+      const tags = tagsInput?.value || ''
+      const content = editor?.innerHTML || ''
+      const res = await fetch('/api/publish', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ title, tags, content }),
+      })
+      const data = await res.json()
+      if (data.success) {
+        // eslint-disable-next-line no-alert
+        alert(`Article published at ${data.slug}`)
+      }
+      else {
+        // eslint-disable-next-line no-alert
+        alert(data.error || 'Failed to publish')
+      }
+    })
+  </script>
+</Layout>
+

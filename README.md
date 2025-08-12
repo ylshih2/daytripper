@@ -27,6 +27,7 @@ Retypeset is a static blog theme based on the [Astro](https://astro.build/) fram
 - Optimized typography
 - Responsive design
 - Comment system
+- In-browser editor for publishing articles at `/publish`
 
 ## Performance
 
